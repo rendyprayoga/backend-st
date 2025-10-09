@@ -23,6 +23,7 @@ async def create_new_user(user: UserCreate):
         id=str(created_user.id),
         email=created_user.email,
         full_name=created_user.full_name,
+        role=created_user.role,
         is_active=created_user.is_active,
         created_at=created_user.created_at,
         updated_at=created_user.updated_at
@@ -36,6 +37,7 @@ async def read_users(skip: int = 0, limit: int = 100):
             id=str(user.id),
             email=user.email,
             full_name=user.full_name,
+            role=user.role,
             is_active=user.is_active,
             created_at=user.created_at,
             updated_at=user.updated_at
@@ -54,6 +56,7 @@ async def read_user(user_id: str):
         id=str(user.id),
         email=user.email,
         full_name=user.full_name,
+        role=user.role, 
         is_active=user.is_active,
         created_at=user.created_at,
         updated_at=user.updated_at
@@ -71,6 +74,7 @@ async def update_existing_user(user_id: str, user: UserUpdate):
         id=str(updated_user.id),
         email=updated_user.email,
         full_name=updated_user.full_name,
+        role=updated_user.role,
         is_active=updated_user.is_active,
         created_at=updated_user.created_at,
         updated_at=updated_user.updated_at
