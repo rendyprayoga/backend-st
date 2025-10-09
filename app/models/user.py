@@ -41,7 +41,7 @@ class User(BaseModel):
     email: EmailStr
     password: str
     full_name: str
-    role: str
+    role: str = "user"
     is_active: bool = True
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
