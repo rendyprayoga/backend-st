@@ -6,7 +6,7 @@ from app.crud.user import (
 )
 from app.schemas.user import UserCreate, UserUpdate, UserResponse
 
-router = APIRouter(prefix="/v1/users", tags=["users"])
+router = APIRouter(prefix="/api/v1/users", tags=["users"])
 
 @router.post("/", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
 async def create_new_user(user: UserCreate):

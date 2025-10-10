@@ -4,13 +4,14 @@ from app.database import get_database
 from app.models.user import User
 from app.schemas.user import UserCreate, UserUpdate
 from app.crud.activity_log import create_activity_log
+from datetime import datetime
 
 db = get_database()
 users_collection = db["users"]
 
 async def create_user(user: UserCreate) -> User:
     user_dict = user.dict()
-    user_dict["password"] = user_dict["password"]  # In production, hash this
+    user_dict["password"] = user_dict["password"]  
     new_user = User(**user_dict)
     result = await users_collection.insert_one(new_user.dict(by_alias=True))
     
@@ -51,25 +52,29 @@ async def get_user_by_email(email: str) -> Optional[User]:
     return None
 
 async def update_user(user_id: str, user: UserUpdate) -> Optional[User]:
-    if ObjectId.is_valid(user_id):
-        update_data = {k: v for k, v in user.dict(exclude_unset=True).items() if v is not None}
-        if update_data:
-            update_data["updated_at"] = User().updated_at
-            result = await users_collection.update_one(
-                {"_id": ObjectId(user_id)}, {"$set": update_data}
+    update_data = {k: v for k, v in user.dict(exclude_unset=True).items() if v is not None}
+
+    if update_data:
+    
+        update_data["updated_at"] = datetime.utcnow()
+
+        result = await users_collection.update_one(
+            {"_id": user_id},  
+            {"$set": update_data}
+        )
+
+        if result.modified_count == 1:
+            await create_activity_log(
+                action="update",
+                resource="user",
+                resource_id=user_id,
+                user_id=user_id,
+                details=update_data
             )
-            if result.modified_count == 1:
-                # Log activity - FIXED: Added user_id parameter
-                await create_activity_log(
-                    action="update",
-                    resource="user",
-                    resource_id=ObjectId(user_id),
-                    user_id=ObjectId(user_id),  # User updates themselves
-                    details=update_data
-                )
-                
-                updated_user = await users_collection.find_one({"_id": ObjectId(user_id)})
-                return User(**updated_user)
+
+            updated_user = await users_collection.find_one({"_id": user_id})
+            return User(**updated_user)
+
     return None
 
 async def delete_user(user_id: str) -> bool:

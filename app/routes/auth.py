@@ -4,7 +4,7 @@ from app.crud.user import get_user_by_email
 from app.utils.auth_utils import create_access_token
 
 router = APIRouter(
-    prefix="/v1/auth",
+    prefix="/api/v1/auth",
     tags=["Auth"]
 )
 
