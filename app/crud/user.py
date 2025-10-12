@@ -79,17 +79,16 @@ async def update_user(user_id: str, user: UserUpdate) -> Optional[User]:
 
 async def delete_user(user_id: str) -> bool:
     if ObjectId.is_valid(user_id):
-        # Get user first to log details
-        user = await users_collection.find_one({"_id": ObjectId(user_id)})
+        user = await users_collection.find_one({"_id": user_id})
         
-        result = await users_collection.delete_one({"_id": ObjectId(user_id)})
+        result = await users_collection.delete_one({"_id": user_id})
         if result.deleted_count == 1:
-            # Log activity - FIXED: Added user_id and details
+            
             await create_activity_log(
                 action="delete",
                 resource="user",
-                resource_id=ObjectId(user_id),
-                user_id=ObjectId(user_id),  # User deletes themselves (or admin)
+                resource_id=user_id,
+                user_id=user_id,  
                 details={"email": user["email"], "full_name": user["full_name"]} if user else {}
             )
             return True

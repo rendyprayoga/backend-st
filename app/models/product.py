@@ -11,6 +11,7 @@ class Product(BaseModel):
     price: float
     category: str
     stock: int
+    status: str
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
@@ -23,6 +24,7 @@ class Product(BaseModel):
                 "description": "Product description",
                 "price": 99.99,
                 "category": "electronics",
-                "stock": 100
+                "stock": 100,
+                "status": "active"
             }
         }

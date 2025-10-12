@@ -1,16 +1,20 @@
-from fastapi import APIRouter, HTTPException, status, Depends
+from fastapi import APIRouter, HTTPException, status
 from typing import List
-from bson import ObjectId
 from app.crud.user import (
     create_user, get_users, get_user, update_user, delete_user, get_user_by_email
 )
 from app.schemas.user import UserCreate, UserUpdate, UserResponse
 
-router = APIRouter(prefix="/api/v1/users", tags=["users"])
+router = APIRouter(prefix="/api/v1/users", tags=["Users"])
 
-@router.post("/", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
+@router.post(
+    "/", 
+    response_model=UserResponse, 
+    status_code=status.HTTP_201_CREATED,
+    summary="Create New User",
+ 
+)
 async def create_new_user(user: UserCreate):
-    # Check if email already exists
     existing_user = await get_user_by_email(user.email)
     if existing_user:
         raise HTTPException(
@@ -29,9 +33,14 @@ async def create_new_user(user: UserCreate):
         updated_at=created_user.updated_at
     )
 
-@router.get("/", response_model=List[UserResponse])
-async def read_users(skip: int = 0, limit: int = 100):
-    users = await get_users(skip, limit)
+@router.get(
+    "/", 
+    response_model=List[UserResponse], 
+    summary="Get All Users",
+   
+)
+async def get_all_users():
+    users = await get_users()
     return [
         UserResponse(
             id=str(user.id),
@@ -44,8 +53,12 @@ async def read_users(skip: int = 0, limit: int = 100):
         ) for user in users
     ]
 
-@router.get("/{user_id}", response_model=UserResponse)
-async def read_user(user_id: str):
+@router.get(
+    "/{user_id}", 
+    response_model=UserResponse,
+    summary="Get One User",
+)
+async def get_single_user(user_id: str):
     user = await get_user(user_id)
     if not user:
         raise HTTPException(
@@ -62,7 +75,11 @@ async def read_user(user_id: str):
         updated_at=user.updated_at
     )
 
-@router.put("/{user_id}", response_model=UserResponse)
+@router.put(
+    "/{user_id}", 
+    response_model=UserResponse,
+    summary="Update Existing User",
+)
 async def update_existing_user(user_id: str, user: UserUpdate):
     updated_user = await update_user(user_id, user)
     if not updated_user:
@@ -80,7 +97,11 @@ async def update_existing_user(user_id: str, user: UserUpdate):
         updated_at=updated_user.updated_at
     )
 
-@router.delete("/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete(
+    "/{user_id}", 
+    status_code=status.HTTP_204_NO_CONTENT,
+    summary="Delete User",
+)
 async def delete_existing_user(user_id: str):
     success = await delete_user(user_id)
     if not success:

@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.routes import users, products, orders, activity_logs,auth
+from app.routes import users, products, activity_logs,auth
 from app.database import get_database
 from app.crud.product import create_category_index
 from fastapi.middleware.cors import CORSMiddleware
@@ -7,7 +7,7 @@ import uvicorn
 
 app = FastAPI(
     title="FastAPI V1",
-    description="A comprehensive CRUD API with MongoDB for users, products, and orders",
+    description="Crud Auth, Users, Products",
     version="1.0.0"
 )
 app.add_middleware(
@@ -21,7 +21,7 @@ app.add_middleware(
 # Include routers
 app.include_router(users.router)
 app.include_router(products.router)
-app.include_router(orders.router)
+# app.include_router(orders.router)
 app.include_router(activity_logs.router)
 app.include_router(auth.router)
 
@@ -30,9 +30,9 @@ async def startup_event():
     # Create indexes on startup
     await create_category_index()
 
-@app.get("/")
-async def root():
-    return {"message": "Welcome to FastAPI MongoDB CRUD API"}
+# @app.get("/")
+# async def root():
+#     return {"message": "Welcome to FastAPI MongoDB CRUD API"}
 
 @app.get("/v1/health")
 async def health_check():
