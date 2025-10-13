@@ -28,6 +28,7 @@ async def create_new_product(product: ProductCreate):
         category=created_product.category,
         stock=created_product.stock,
         status=created_product.status,
+        image_url=created_product.image_url,
         created_at=created_product.created_at,
         updated_at=created_product.updated_at
     )
@@ -48,6 +49,7 @@ async def get_all_products():
             category=product.category,
             stock=product.stock,
             status=product.status,
+            image_url=product.image_url,
             created_at=product.created_at,
             updated_at=product.updated_at
         )
@@ -70,6 +72,7 @@ async def read_product(product_id: str):
         category=product.category,
         stock=product.stock,
         status=product.status,
+        image_url=product.image_url,
         created_at=product.created_at,
         updated_at=product.updated_at
     )
@@ -96,6 +99,7 @@ async def update_existing_product(product_id: str, product: ProductUpdate):
         category=updated_product.category,
         stock=updated_product.stock,
         status=updated_product.status,
+        image_url=updated_product.image_url,
         created_at=updated_product.created_at,
         updated_at=updated_product.updated_at
     )
