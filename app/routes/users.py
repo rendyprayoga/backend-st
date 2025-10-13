@@ -29,6 +29,8 @@ async def create_new_user(user: UserCreate):
         full_name=created_user.full_name,
         role=created_user.role,
         is_active=created_user.is_active,
+        phone=created_user.phone,
+        profile_picture=created_user.profile_picture,
         created_at=created_user.created_at,
         updated_at=created_user.updated_at
     )
@@ -48,6 +50,8 @@ async def get_all_users():
             full_name=user.full_name,
             role=user.role,
             is_active=user.is_active,
+            phone=user.phone,
+            profile_picture=user.profile_picture,
             created_at=user.created_at,
             updated_at=user.updated_at
         ) for user in users
@@ -71,6 +75,8 @@ async def get_single_user(user_id: str):
         full_name=user.full_name,
         role=user.role, 
         is_active=user.is_active,
+        phone=user.phone,
+        profile_picture=user.profile_picture,
         created_at=user.created_at,
         updated_at=user.updated_at
     )
@@ -93,6 +99,8 @@ async def update_existing_user(user_id: str, user: UserUpdate):
         full_name=updated_user.full_name,
         role=updated_user.role,
         is_active=updated_user.is_active,
+        phone=updated_user.phone,
+        profile_picture=updated_user.profile_picture,
         created_at=updated_user.created_at,
         updated_at=updated_user.updated_at
     )

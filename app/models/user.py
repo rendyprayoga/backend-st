@@ -43,6 +43,8 @@ class User(BaseModel):
     full_name: str
     role: str = "user"
     is_active: bool = True
+    phone: Optional[str] = None
+    profile_picture: Optional[str]=None
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
@@ -57,6 +59,7 @@ class User(BaseModel):
                 "password": "securepassword",
                 "full_name": "John Doe",
                 "role": "admin",
-                "is_active": True
+                "is_active": True,
+                "profile_picture":"/uploads/profile_picture.jpg"
             }
         }

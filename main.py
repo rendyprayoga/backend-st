@@ -1,5 +1,6 @@
 from fastapi import FastAPI
-from app.routes import users, products, activity_logs,auth
+from fastapi.staticfiles import StaticFiles
+from app.routes import users, products, activity_logs,auth,upload
 from app.database import get_database
 from app.crud.product import create_category_index
 from fastapi.middleware.cors import CORSMiddleware
@@ -19,11 +20,13 @@ app.add_middleware(
 )
 
 # Include routers
+app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 app.include_router(users.router)
 app.include_router(products.router)
 # app.include_router(orders.router)
 app.include_router(activity_logs.router)
 app.include_router(auth.router)
+app.include_router(upload.router)
 
 @app.on_event("startup")
 async def startup_event():

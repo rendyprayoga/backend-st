@@ -7,6 +7,21 @@ class UserCreate(BaseModel):
     password: str
     full_name: str
     role:Optional[str] = "user"
+    phone: Optional[str] = None
+    profile_picture: Optional[str]=None 
+
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "email": "user@example.com",
+                "password": "securepassword",
+                "full_name": "John Doe",
+                "role": "admin",
+                 "phone": "+62823456789",
+                "profile_picture": "/uploads/profile.jpg"
+            }
+        }
+
 
 class UserUpdate(BaseModel):
     email: Optional[EmailStr] = None
@@ -14,6 +29,8 @@ class UserUpdate(BaseModel):
     full_name: Optional[str] = None
     role: Optional[str] = None  
     is_active: Optional[bool] = None
+    phone:Optional[str] = None
+    profile_picture: Optional[str]=None
 
 class UserLogin(BaseModel):
     email: EmailStr
@@ -25,6 +42,8 @@ class UserResponse(BaseModel):
     full_name: str
     role: Optional[str] = None   
     is_active: bool
+    phone: Optional[str] = None
+    profile_picture: Optional[str]=None
     created_at: datetime
     updated_at: datetime
 

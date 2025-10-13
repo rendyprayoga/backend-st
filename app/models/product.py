@@ -12,6 +12,7 @@ class Product(BaseModel):
     category: str
     stock: int
     status: str
+    image_url: Optional[str]= None
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
@@ -25,6 +26,7 @@ class Product(BaseModel):
                 "price": 99.99,
                 "category": "electronics",
                 "stock": 100,
-                "status": "active"
+                "status": "active",
+                "image_url": "/uploads/products/image.jpg"
             }
         }

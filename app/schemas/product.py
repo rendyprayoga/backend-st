@@ -9,6 +9,7 @@ class ProductCreate(BaseModel):
     category: str
     stock: int
     status: str
+    image_url: Optional[str]= None
 
     @field_validator('price', mode='before')
     def convert_price(cls, value):
@@ -23,6 +24,7 @@ class ProductUpdate(BaseModel):
     category: Optional[str] = None
     stock: Optional[int] = None
     status: Optional[str] = None
+    image_url: Optional[str]= None
 
 class ProductResponse(BaseModel):
     id: str  
@@ -32,6 +34,7 @@ class ProductResponse(BaseModel):
     category: str
     stock: int
     status: str
+    image_url: Optional[str]= None
     created_at: datetime
     updated_at: datetime
 
