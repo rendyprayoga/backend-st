@@ -11,14 +11,30 @@ app = FastAPI(
     description="Crud Auth, Users, Products",
     version="1.0.0"
 )
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=["http://localhost:3000"], 
+#     allow_credentials=True,
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"], 
+    allow_origins=[
+        "http://localhost:3000",      # Untuk web frontend
+        "http://127.0.0.1:3000",      # Untuk web frontend
+        "http://localhost",           # Untuk Flutter web
+        "http://127.0.0.1",           # Untuk Flutter web  
+        "http://10.0.2.2",            #  UNTUK ANDROID EMULATOR 
+        "http://10.0.2.2:8000",       #  ANDROID EMULATOR DENGAN PORT 
+        "http://localhost:8000",      # Local development
+        "http://127.0.0.1:8000",      # Local development
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 # Include routers
 app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 app.include_router(users.router)
