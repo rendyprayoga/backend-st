@@ -1,0 +1,16 @@
+# 🚀 FastAPI Backend
+
+Backend ini dibangun menggunakan **FastAPI** dengan integrasi ke **MongoDB** menggunakan **Motor**.  
+Proyek ini juga sudah mendukung **autentikasi JWT**, **validasi data dengan Pydantic v2**, serta **konfigurasi environment** menggunakan `python-dotenv`.
+
+---
+
+## 📦 Requirements
+
+Pastikan kamu sudah menggunakan **Python 3.10+** di sistem kamu.
+
+Instal semua dependencies menggunakan:
+
+```bash
+pip install -r requirements.txt
+```
